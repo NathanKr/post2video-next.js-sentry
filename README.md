@@ -1,5 +1,5 @@
 <h1>Project Name</h1>
-24/7 Error Monitoring for a Next.js Micro-SaaS
+ Production Alerts on DigitalOcean + Next.js - My Experience
 
 
 <h2>Project Description</h2>
@@ -18,6 +18,7 @@
 
 
 <h3>output</h3>
+
 - what design to choose
 - how to get alerts
 
@@ -50,22 +51,22 @@
 <h2>Monitoring Design</h2>
 
 <h3>constrants</h3>
+
 - tool must be free
 - fit technologies
 - most of the buisness logic is on the server
 
 <h3>layers</h3>
 
-### System Reliability & Error Monitoring Strategy
+### Error Monitoring Strategy
 
- **Approach:** Layered monitoring - not alternatives, but complementary defenses
+  **Approach:** Layered error detection - complementary defenses
 
-  | Layer | Tool | What It Monitors | Alert Method | Solved Issue #323? |
-  |-------|------|------------------|--------------|-------------------|
-  | **Application** | Sentry | Unhandled exceptions, business logic errors | Email/Slack/Discord | ✅ YES |
-  | **Logging** | Winston (existing) | Custom patterns in logs | Webhook (optional) | Partially |
-  | **Process** | PM2 | Process crashes, OOM, restarts | System notifications | ❌ NO (different issue) |
-  | **Uptime** | Uptime Robot (existing) | Server availability, response time | Email/SMS | ❌ NO (different issue) |
+  | Layer | Tool | What Errors It Catches | Alert Method |
+  |-------|------|------------------------|--------------|
+  | **Application** | Sentry | Unhandled exceptions, business logic failures | Email/Slack |
+  | **Logging** | Winston | Caught errors logged to files | File-based (or webhook) |
+  | **Process** | PM2 | Process crashes, OOM kills | System notifications |
 
 
 <h3>Awareness/Alert Channels</h3>
@@ -88,10 +89,7 @@
   - Email (via pm2-logrotate or custom scripts)
   - Keymetrics (PM2's monitoring service - paid)
 
-  **Uptime Robot (existing):**
-  - Email ✅ (currently configured)
-  - SMS (paid plans)
-  - Webhooks
+ 
 
   ### Decision
 
