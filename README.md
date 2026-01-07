@@ -1,5 +1,5 @@
 <h1>Project Name</h1>
-24/7 Error Awareness for a Next.js Micro-SaaS
+24/7 Error Monitoring for a Next.js Micro-SaaS
 
 
 <h2>Project Description</h2>
@@ -36,16 +36,18 @@
 
 
 <h2>Technologies Used</h2>
-next.js
-digital ocean droplet
-ubuntu
-micro saas
-winston
-pm2 
-nginx
+
+- next.js
+- digital ocean droplet
+- ubuntu
+- micro saas
+- winston
+- pm2 
+- nginx
+- UptimeRobot
 
 
-<h2>Design</h2>
+<h2>Monitoring Design</h2>
 
 <h3>constrants</h3>
 - tool must be free
@@ -56,17 +58,14 @@ nginx
 
 ### System Reliability & Error Monitoring Strategy
 
-| Feature | Option 1: Managed (Sentry) | Option 2: Integrated (Winston + Webhook) | Option 3: Infrastructure (PM2 Watcher) |
-| :--- | :--- | :--- | :--- |
-| **Scope** | Full-Stack (UI + API + DB) | Business Logic & Critical Paths | OS & Process Level (Hard Crashes) |
-| **Implementation** | Low Effort (SaaS Wizard) | Medium Effort (Uses existing logger) | High Effort (Bash/Systemd) |
-| **Alerting** | Dedicated App / Email / Slack | Slack / Discord / Telegram Webhook | System Email / SMS |
-| **Maintainability** | High (Managed externally) | High (Single source of truth in code) | Medium (Tied to Ubuntu config) |
-| **Data Retention** | 30-90 Days (SaaS) | Indefinite (On-Droplet Logs) | Rotational (Logrotate) |
-| **Cost (<100 DAU)** | $0 (Free Tier) | $0 | $0 |
-| **Best For** | Unhandled exceptions + errors explicitly sent to Sentry | Catching business logic failures. | Catching OOM or server reboots. |
-| **CLAUDE.md Fit** | "User Experience is critical" | "Avoid premature optimization" | "Simple over sophisticated" |
+ **Approach:** Layered monitoring - not alternatives, but complementary defenses
 
+  | Layer | Tool | What It Monitors | Alert Method | Solved Issue #323? |
+  |-------|------|------------------|--------------|-------------------|
+  | **Application** | Sentry | Unhandled exceptions, business logic errors | Email/Slack/Discord | ✅ YES |
+  | **Logging** | Winston (existing) | Custom patterns in logs | Webhook (optional) | Partially |
+  | **Process** | PM2 | Process crashes, OOM, restarts | System notifications | ❌ NO (different issue) |
+  | **Uptime** | Uptime Robot (existing) | Server availability, response time | Email/SMS | ❌ NO (different issue) |
 
 <h2>Code Structure</h2>
 ....
