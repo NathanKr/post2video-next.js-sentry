@@ -20,7 +20,7 @@
 <h3>output</h3>
 
 - what design to choose
-- how to get alerts
+- who issue alerts on error and how
 
 <h2>Key Takeaways</h2>
 <ul>
@@ -60,14 +60,15 @@
 
 ### Error Monitoring Strategy
 
-  **Approach:** Layered error detection - complementary defenses
+**Approach:** Layered error detection - complementary defenses
 
-  | Layer | Tool | What Errors It Catches | Alert Method |
-  |-------|------|------------------------|--------------|
-  | **Application** | Sentry | Unhandled exceptions, business logic failures | Email/Slack |
-  | **Logging** | Winston | Caught errors logged to files | File-based (or webhook) |
-  | **Process** | PM2 | Process crashes, OOM kills | System notifications |
+  | Layer | Tool | Role (Real) | Can Alert on Error? |
+  |-------|------|-------------|---------------------|
+  | **Application** | **Sentry SDK** | Alerts on: (1) thrown exceptions, (2) errors explicitly sent via SDK | **Yes – via Sentry alert rules** |
+  | **Application (handled)** | Your code + Winston | Logs all errors, but requires webhook for alerts | No, unless **you build webhook** |      
+  | **Process** | **PM2** | Detect crash/OOM | Limited / usually custom script |
 
+  **Note:** Server availability monitored separately via Uptime Robot.
 
 <h3>Awareness/Alert Channels</h3>
 
