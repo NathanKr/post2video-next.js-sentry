@@ -54,7 +54,7 @@
 - fit technologies
 - most of the buisness logic is on the server
 
-<h3>options</h3>
+<h3>layers</h3>
 
 ### System Reliability & Error Monitoring Strategy
 
@@ -66,6 +66,42 @@
   | **Logging** | Winston (existing) | Custom patterns in logs | Webhook (optional) | Partially |
   | **Process** | PM2 | Process crashes, OOM, restarts | System notifications | ❌ NO (different issue) |
   | **Uptime** | Uptime Robot (existing) | Server availability, response time | Email/SMS | ❌ NO (different issue) |
+
+
+<h3>Awareness/Alert Channels</h3>
+
+
+  **Sentry:**
+  - Email ✅ (free tier includes email alerts)
+  - Slack (requires webhook setup)
+  - Discord (requires webhook setup)
+  - PagerDuty (paid plans)
+  - Custom webhooks
+
+  **Winston + Webhook:**
+  - Slack (free with incoming webhooks)
+  - Discord (free with webhooks)
+  - Telegram (free with bot API)
+  - Custom HTTP endpoints
+
+  **PM2:**
+  - Email (via pm2-logrotate or custom scripts)
+  - Keymetrics (PM2's monitoring service - paid)
+
+  **Uptime Robot (existing):**
+  - Email ✅ (currently configured)
+  - SMS (paid plans)
+  - Webhooks
+
+  ### Decision
+
+  **For Issue #323 (Immediate):**
+  - **Sentry** → Email alerts (included in free tier)
+  - Start with email, can add Slack later if needed
+
+  **Future Consideration:**
+  - Add Winston → Slack webhook for custom business alerts (e.g., "user out of credits")
+
 
 <h2>Code Structure</h2>
 ....
