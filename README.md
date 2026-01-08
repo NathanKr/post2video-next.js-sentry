@@ -76,14 +76,29 @@ but no files created . Because i chose to log in with an email/password, you had
 
 If the automated Sentry wizard hangs or fails to generate local files (for example, after logging in via email/password), you can bypass the browser step using an **Auth Token**.
 
-#### 1. Generate an Auth Token
-1. Log in to your Sentry Dashboard.  
-2. Navigate to **Settings → Account → API → Auth Tokens**.  
-3. Click **Create New Token**.  
-4. Assign the following scopes:
-   - `project:write` (required to modify local config files)  
-   - `org:read` (required to list your organizations)  
-5. Copy the token string (it usually begins with `sntrys_`).
+### 1. Generate an Auth Token
+
+1. Log in to [Sentry.io](https://sentry.io/).  
+2. Click **Settings** (gear icon) in the left sidebar.  
+3. Under the **Developer Settings** section, click **Organization Tokens**.  
+4. Click **Create New Token**.  
+5. **Name:** Enter `post2video-cli-token`.  
+6. Click **Create Token** and copy the string immediately (it starts with `sntrys_`).
+
+
+> **Note:** Sentry only shows the full token once for security. If you lose it, you will need to delete it and create a new one.
+
+step 1
+<img src='./figs/create-new-token.png'>
+
+step 2
+<img src='./figs/create-organization-token.png'/>
+
+step 3
+<img src='./figs/copy-token.png'/>
+
+step 4 
+<img src='./figs/token-created.png'/>
 
 #### 2. Run the Wizard with the Auth Token
 
