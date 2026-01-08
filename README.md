@@ -1,26 +1,28 @@
 <h1>Project Name</h1>
- Production Alerts on DigitalOcean + Next.js - My Experience
+ How I Built Production Error Alerts for a Next.js Micro-SaaS
 
 
 <h2>Project Description</h2>
 ....
 
 
-
 <h2>Motivation</h2>
 
-<h3>input</h3>
-<ul>
-<li>You have user signup but fail onboarding - error in logs , they can not work but you dont know about it. BTW, this is just example error can happen in all parts of code</li> 
-<li>i need alert when error happen</li>
-<li>i all ready winston logger run on production in this case the error was written there</li>
-</ul>
+<p>
+A user successfully signed up on post2video.com but failed onboarding due to a production error.
+The error was logged, but no alert was triggered — so I didn’t know about it.
+</p>
+
+<p>
+This highlighted a gap in my production setup:
+logs existed, but there was no real-time error awareness.
+</p>
+
+<p>
+The goal was to design a simple, free, and reliable alerting system for a Next.js micro-SaaS.
+</p>
 
 
-<h3>output</h3>
-
-- what design to choose
-- who issue alerts on error and how
 
 <h2>Key Takeaways</h2>
 <ul>
@@ -48,58 +50,34 @@
 - UptimeRobot
 
 
-<h2>Monitoring Design</h2>
+## Monitoring Design
 
-<h3>constrants</h3>
+### Constraints
+- Tool must be free
+- Must fit existing tech stack (Next.js, DigitalOcean, Ubuntu)
+- Most business logic runs on the server
 
-- tool must be free
-- fit technologies
-- most of the buisness logic is on the server
+### Evaluated Alerting Options
+| Option | Type | Pros | Cons | Decision |
+|--------|------|------|------|----------|
+| Custom Alerts (Winston + Webhooks) | Self-built | Full control, no vendor lock-in | High maintenance, no error grouping, alert noise | Rejected |
+| Self-hosted Error Tracker (GlitchTip) | Open-source | Full data ownership, Sentry-compatible | Requires hosting, scaling, backups | Rejected |
+| Paid APM Tools (Datadog, New Relic) | SaaS | Powerful observability | Paid, overkill for micro-SaaS | Rejected |
+| **Sentry** | SaaS | Free tier alerts, Next.js support, automatic grouping | Free tier: 5K events/month | **Chosen** |
 
-<h3>layers</h3>
+**Why Sentry?** While the free tier has a 5K events/month limit, the tradeoff favors Sentry at micro-SaaS scale. Expected error volume for <100 DAU with ~1% error rate is 600-1.2K events/month (well within limits). The automatic error grouping and Next.js integration eliminate the maintenance burden of custom solutions, and no infrastructure management beats self-hosted options for a solo developer.
 
 ### Error Monitoring Strategy
 
-**Approach:** Layered error detection - complementary defenses
+**Approach:** Layered error detection – complementary defenses
 
-  | Layer | Tool | Role (Real) | Can Alert on Error? |
-  |-------|------|-------------|---------------------|
-  | **Application** | **Sentry SDK** | Alerts on: (1) thrown exceptions, (2) errors explicitly sent via SDK | **Yes – via Sentry alert rules** |
-  | **Application (handled)** | Your code + Winston | Logs all errors, but requires webhook for alerts | No, unless **you build webhook** |      
-  | **Process** | **PM2** | Detect crash/OOM | Limited / usually custom script |
+| Layer | Tool | Role (Real) | Can Alert on Error? |
+|-------|------|-------------|---------------------|
+| **Application** | **Sentry SDK** | Alerts on: (1) thrown exceptions, (2) errors explicitly sent via SDK | **Yes – via Sentry alert rules** |
+| **Application (handled)** | Your code + Winston | Logs all errors, but requires webhook for alerts | No, unless **you build webhook** |      
+| **Process** | **PM2** | Detect crash/OOM | Limited / usually custom script |
 
-  **Note:** Server availability monitored separately via Uptime Robot.
-
-<h3>Awareness/Alert Channels</h3>
-
-
-  **Sentry:**
-  - Email ✅ (free tier includes email alerts)
-  - Slack (requires webhook setup)
-  - Discord (requires webhook setup)
-  - PagerDuty (paid plans)
-  - Custom webhooks
-
-  **Winston + Webhook:**
-  - Slack (free with incoming webhooks)
-  - Discord (free with webhooks)
-  - Telegram (free with bot API)
-  - Custom HTTP endpoints
-
-  **PM2:**
-  - Email (via pm2-logrotate or custom scripts)
-  - Keymetrics (PM2's monitoring service - paid)
-
- 
-
-  ### Decision
-
-  **For Issue #323 (Immediate):**
-  - **Sentry** → Email alerts (included in free tier)
-  - Start with email, can add Slack later if needed
-
-  **Future Consideration:**
-  - Add Winston → Slack webhook for custom business alerts (e.g., "user out of credits")
+**Note:** Server availability monitored separately via Uptime Robot.
 
 
 <h2>Code Structure</h2>
