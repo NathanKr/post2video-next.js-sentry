@@ -168,7 +168,7 @@
   If errors appear in Sentry, your installation is complete and working correctly!
 
   <h2>Usage</h2>
-  ....
+  click button 'Throw Sample Error' and you get email (check demo)
 
 
   <h2>Technologies Used</h2>
@@ -186,6 +186,7 @@
   ## Monitoring Design
 
   ### Constraints
+  - Micro-SaaS scale (<100 DAU)
   - Tool must be free
   - Must fit existing tech stack (Next.js, DigitalOcean, Ubuntu)
   - Most business logic runs on the server
@@ -217,8 +218,12 @@
   ....
 
   <h2>Demo</h2>
-  
-  alert email from sentry
+  example page after click button "Throw Sample Error"
+  <img src='./figs/example-page-after-click-throw.png'/>
+
+
+  alert email from sentry following button click
+  <img src='./figs/sentry-alert.png'>
 
   <h2>Points of Interest</h2>
   <ul>
