@@ -239,6 +239,12 @@ pnpm dev
     
   </ul>
 
+  <h2>open issue</h2>
+  <ul>
+      <li>do i get the emails even without button click</li>
+    <li>do i get the two emails because it is debug version </li>
+  </ul>
+
   <h2>References</h2>
   <ul>
       <li><a href='https://docs.sentry.io/platforms/javascript/guides/nextjs/'>Sentry for Next.js SDK Docs</a></li>
