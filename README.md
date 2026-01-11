@@ -168,6 +168,14 @@
   If errors appear in Sentry, your installation is complete and working correctly!
 
   <h2>Usage</h2>
+
+  run the development server
+  
+```bash
+pnpm dev
+```
+
+
   click button 'Throw Sample Error' and you get email (check demo)
 
 
