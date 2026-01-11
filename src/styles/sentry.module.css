@@ -111,6 +111,12 @@
   text-decoration: underline;
 }
 
+.buttonGroup {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
 @media (prefers-color-scheme: dark) {
   .main a {
     color: #B3A1FF;

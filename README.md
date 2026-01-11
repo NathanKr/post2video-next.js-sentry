@@ -26,9 +26,9 @@
 
   <h2>Key Takeaways</h2>
   <ul>
-    <li><strong>Implicit vs. Explicit</strong>: Sentry captures errors implicitly on client / server (unhandled exceptions) and explicitly (handled errors via SDK calls like Sentry.captureException())</li>
-    <li><strong>Real-time Alerts</strong>: Real-time email alerts ensure you know about production errors immediately</li>
-    <li><strong>Micro-SaaS Friendly</strong>: Free tier (5K events/month) is in general sufficient for micro-SaaS </li>
+    <li>Sentry captures errors implicitly on client / server (unhandled exceptions) and explicitly (handled errors via SDK calls like Sentry.captureException())</li>
+    <li>Real-time email alerts ensure you know about production errors immediately</li>
+    <li>Free tier (5K events/month) is in general sufficient for micro-SaaS </li>
   </ul>
 
   <h2>Installation</h2>
