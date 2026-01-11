@@ -170,14 +170,42 @@
 
   <h2>Usage</h2>
 
-  run the development server
-  
+  ### Run the Demo
+
+  **Development mode:**
+
 ```bash
-pnpm dev
+  pnpm dev
 ```
 
 
-  click button 'Throw Sample Error' and you get email (check demo)
+  Click the 'Throw Sample Error' or 'Send Explicit Error' buttons and you'll receive an email alert from Sentry.
+
+  ### ⚠️ Production-Only Configuration (Recommended for Real Apps) 
+
+  By default, Sentry runs in both development and production, wasting your 5K events/month quota during local testing.
+
+  To preserve free tier events, configure Sentry to run only in production:
+
+  Wrap Sentry.init() in sentry.client.config.ts and sentry.server.config.ts:
+
+```typescript
+  if (process.env.NODE_ENV === 'production') {
+    Sentry.init({
+      // ... your config
+    });
+  }
+```
+
+
+**To run in production mode:**
+
+```bash
+  pnpm build
+  pnpm start
+```
+
+
 
 
   <h2>Technologies Used</h2>
