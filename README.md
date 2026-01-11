@@ -210,6 +210,19 @@ pnpm dev
 
   **Why Sentry?** While the free tier has a 5K events/month limit, the tradeoff favors Sentry at micro-SaaS scale. Expected error volume for <100 DAU with ~1% error rate is 600-1.2K events/month (well within limits). The automatic error grouping and Next.js integration eliminate the maintenance burden of custom solutions, and no infrastructure management beats self-hosted options for a solo developer.
 
+
+  ### How Sentry Works
+
+  When an error occurs, the Sentry SDK hooks into the runtime to automatically capture the exception and its context (like stack traces and breadcrumbs), then transmits it asynchronously as a JSON payload to Sentry’s servers via a non-blocking HTTP POST request.
+  
+  **Propagation Breakdown**
+
+  - **Capture**: The SDK listens for global events like window.onerror (browser) or uncaughtException (server).
+  - **Enrichment**: It attaches metadata such as the user's OS, browser, and the sequence of actions leading to the crash (Breadcrumbs).
+  - **Transport**: The data is bundled into an "Envelope" and sent to your unique DSN endpoint without slowing down your application's performance.
+  - **Processing**: Sentry’s cloud receives the data, applies Source Maps to make the code readable, and checks your Alert Rules to send you an email immediately.
+
+
   ### Error Monitoring Strategy
 
   **Approach:** Layered error detection – complementary defenses
