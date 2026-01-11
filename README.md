@@ -181,14 +181,14 @@
 
   Click the 'Throw Sample Error' or 'Send Explicit Error' buttons and you'll receive an email alert from Sentry.
 
-  ### ⚠️ Production-Only Configuration (Recommended for Real Apps) 
+  ### Production-Only Configuration (Recommended for Real Apps) 
 
   By default, Sentry runs in both development and production, wasting your 5K events/month quota during local testing.
 
   To preserve free tier events, configure Sentry to run only in production:
 
-  Wrap Sentry.init() in sentry.client.config.ts and sentry.server.config.ts:
-
+  Wrap Sentry.init() in instrumentation-client.ts, sentry.server.config.ts, and sentry.edge.config.ts:
+  
 ```typescript
   if (process.env.NODE_ENV === 'production') {
     Sentry.init({
