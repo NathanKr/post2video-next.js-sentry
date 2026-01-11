@@ -26,8 +26,9 @@
 
   <h2>Key Takeaways</h2>
   <ul>
-      <li>...</li>
-    
+    <li><strong>Implicit vs. Explicit</strong>: Sentry captures errors implicitly on client / server (unhandled exceptions) and explicitly (handled errors via SDK calls like Sentry.captureException())</li>
+    <li><strong>Real-time Alerts</strong>: Real-time email alerts ensure you know about production errors immediately</li>
+    <li><strong>Micro-SaaS Friendly</strong>: Free tier (5K events/month) is in general sufficient for micro-SaaS </li>
   </ul>
 
   <h2>Installation</h2>
@@ -233,6 +234,16 @@ pnpm dev
   alert email from sentry following button click
   <img src='./figs/sentry-alert.png'>
 
+  sentry alerts as result of un handled exception
+
+  - red : sentry api error
+  - orange : sentry front end error
+  - blue : link not defined error
+  - purple : style not defined error
+
+
+  <img src='./figs/sentry-alerts.png'/>
+
   <h2>Points of Interest</h2>
   <ul>
       <li>...</li>
@@ -241,8 +252,9 @@ pnpm dev
 
   <h2>open issue</h2>
   <ul>
-      <li>do i get the emails even without button click</li>
+    <li>do i get the emails even without button click - yes in case you have an exception</li>
     <li>do i get the two emails because it is debug version </li>
+    <li>in general i want to see sentry only in production otherwise its waist of free tier</li>
   </ul>
 
   <h2>References</h2>
