@@ -268,7 +268,11 @@
   ....
 
   <h2>Demo</h2>
-  example page after click button "Throw Sample Error"
+  home page
+  <img src='./figs/main-page.png'/>
+  
+
+  sentry page after click button "Throw Sample Error"
   <img src='./figs/example-page-after-click-throw.png'/>
 
 
