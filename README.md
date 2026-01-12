@@ -277,11 +277,12 @@ When an error occurs, the Sentry SDK hooks into the runtime to automatically cap
 
   <h2>Code Structure</h2>
 
+> 💡 **Note:** The standard Sentry installation includes `Sentry.logger` and `Sentry.startSpan` in the example code. This demo has removed them to focus exclusively on error capture and alerting.
+
   ### Sentry API Usage Explained
 
 To provide deeper observability beyond just "catching crashes," the following Sentry APIs are utilized in this implementation:
 
-- **`Sentry.startSpan`**: Used for **Performance Monitoring**. By wrapping the `fetch` call in a span, Sentry tracks the latency between the frontend click and the backend API response, creating a "trace" that connects both sides of the application.
 - **`Sentry.captureException`**: Used for **Explicit Error Tracking**. This is essential for reporting errors that occur inside `try/catch` blocks or business logic where the application doesn't necessarily "crash," but the error state still needs to be recorded.
   
  ### API Endpoint (Server-Side)
@@ -315,15 +316,10 @@ export function GET() {
         type="button"
         onClick={async () => {
           // --- User clicked unhandled exception button
-          await Sentry.startSpan(
-            { name: "Example Frontend/Backend Span", op: "test" },
-            async () => {
-              const res = await fetch("/api/sentry-example-api");
-              if (!res.ok) {
-                setHasSentError(true);
-              }
-            }
-          );
+          const res = await fetch("/api/sentry-example-api");
+          if (!res.ok) {
+            setHasSentError(true);
+          }
           throw new SentryExampleFrontendError(
             "Unhandled exception on frontend"
           );
