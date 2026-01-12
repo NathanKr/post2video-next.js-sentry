@@ -193,6 +193,7 @@ If errors appear in Sentry and your Inbox, your installation is complete and wor
 
   
   <h2>Usage</h2>
+  This section covers running the demo locally and configuring Sentry for production deployment.
 
 ### Run the Demo
 
@@ -230,6 +231,7 @@ if (process.env.NODE_ENV === "production") {
 ```
 
   <h2>Technologies Used</h2>
+    Technologies organized by system layer:
 
   ### Core Stack
   - **Next.js** (App Router)
@@ -249,6 +251,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 ## Monitoring Design
+ This section documents the constraints, evaluation process, and architectural decisions behind choosing Sentry for production error monitoring.
 
 ### Constraints
 
@@ -366,6 +369,8 @@ Demonstrates manual error reporting using Sentry.captureException.
 ```
 
   <h2>Demo</h2>
+  Visual walkthrough from triggering test errors to receiving Sentry alerts.
+
   home page
   <img src="./figs/main-page.png"
      alt="Post2Video demo homepage with Sentry test buttons visible" />
