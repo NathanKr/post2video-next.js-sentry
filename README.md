@@ -369,16 +369,6 @@ sentry alerts as result of un handled exception
 
   <img src='./figs/sentry-alerts.png'/>
 
-  <h2>Points of Interest</h2>
-  <ul>
-      <li>...</li>
-    
-  </ul>
-
-  <h2>open issue</h2>
-  <ul>
-    <li>why i get in email only front end</li>
-  </ul>
 
   <h2>References</h2>
   <ul>
