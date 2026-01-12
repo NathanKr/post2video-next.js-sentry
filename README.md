@@ -1,10 +1,8 @@
   <h1>Project Name</h1>
     Next.js + Sentry: Production Error Monitoring for Post2Video
 
-
   <h2>Project Description</h2>
   Building production error alerts for a Next.js micro-SaaS: how I evaluated and integrated Sentry for real-time error awareness. Includes the working demo I used to test the integration before deploying it to Post2Video.
-
 
   <h2>Motivation</h2>
 
@@ -22,8 +20,6 @@
   The goal was to design a simple, free, and reliable alerting system for a Next.js micro-SaaS.
   </p>
 
-
-
   <h2>Key Takeaways</h2>
   <ul>
     <li>Sentry captures errors implicitly on client / server (unhandled exceptions) and explicitly (handled errors via SDK calls like Sentry.captureException())</li>
@@ -33,85 +29,81 @@
 
   <h2>Installation</h2>
 
-  Step 1: Install the Dependency
+Step 1: Install the Dependency
 
-  ```bash
-  pnpm add @sentry/nextjs 
-  ```
+```bash
+pnpm add @sentry/nextjs
+```
 
-  Step 2: Run the Initialization
+Step 2: Run the Initialization
 
-  ```bash
-  pnpm dlx @sentry/wizard@latest -i nextjs
-  ```
+```bash
+pnpm dlx @sentry/wizard@latest -i nextjs
+```
 
-  You are prompots for questions : 
+You are prompted for questions :
 
   <img src='./figs/prompt-after-step2-partA.png'/>
 
-  The browser in open so fill the info
+The browser in open so fill the info
 
   <img src='./figs/prompt-after-step2-partB-filled.png'/>
 
-  click the 'create youtr account' button and you are navigated to select yout project
+click the 'create your account' button and you are navigated to select your project
 
   <img src='./figs/prompt-after-step2-partB-select-your-project.png'/>
 
-
-  Click continue  => i got 'waiting for wizard to connect'
+Click continue => i got 'waiting for wizard to connect'
 
   <img src='./figs/waiting-to-connect.png'/>
 
-  i used email password so need to confirm email and got
+i used email password so need to confirm email and got
 
   <img src='./figs/emailed-confirmed.png'/>
 
-  Now in sentry i can see the project
+Now in sentry i can see the project
 
   <img src='./figs/projects.png'>
 
-  but no files created . Because i chose to log in with an email/password, you had the extra step of confirming your email. This sometimes causes the browser session to "lose track" of the original terminal request. 
+but no files created . Because i chose to log in with an email/password, you had the extra step of confirming your email. This sometimes causes the browser session to "lose track" of the original terminal request.
 
+### 🛠️ Installation Troubleshooting: Manual CLI Initialization
 
-  ### 🛠️ Installation Troubleshooting: Manual CLI Initialization
+If the automated Sentry wizard hangs or fails to generate local files (for example, after logging in via email/password), you can bypass the browser step using an **Auth Token**.
 
-  If the automated Sentry wizard hangs or fails to generate local files (for example, after logging in via email/password), you can bypass the browser step using an **Auth Token**.
+### 1. Generate an Auth Token
 
-  ### 1. Generate an Auth Token
+1. Log in to [Sentry.io](https://sentry.io/).
+2. Click **Settings** (gear icon) in the left sidebar.
+3. Under the **Developer Settings** section, click **Organization Tokens**.
+4. Click **Create New Token**.
+5. **Name:** Enter `post2video-cli-token`.
+6. Click **Create Token** and copy the string immediately (it starts with `sntrys_`).
 
-  1. Log in to [Sentry.io](https://sentry.io/).  
-  2. Click **Settings** (gear icon) in the left sidebar.  
-  3. Under the **Developer Settings** section, click **Organization Tokens**.  
-  4. Click **Create New Token**.  
-  5. **Name:** Enter `post2video-cli-token`.  
-  6. Click **Create Token** and copy the string immediately (it starts with `sntrys_`).
+> **Note:** Sentry only shows the full token once for security. If you lose it, you will need to delete it and create a new one.
 
+step 1
+<img src='./figs/create-new-token.png'>
 
-  > **Note:** Sentry only shows the full token once for security. If you lose it, you will need to delete it and create a new one.
+step 2
+<img src='./figs/create-organization-token.png'/>
 
-  step 1
-  <img src='./figs/create-new-token.png'>
+step 3
+<img src='./figs/copy-token.png'/>
 
-  step 2
-  <img src='./figs/create-organization-token.png'/>
+step 4
+<img src='./figs/token-created.png'/>
 
-  step 3
-  <img src='./figs/copy-token.png'/>
+#### 2. Run the Wizard with the Auth Token
 
-  step 4 
-  <img src='./figs/token-created.png'/>
+```bash
+pnpm dlx @sentry/wizard@latest -i nextjs --auth-token YOUR_TOKEN_HERE
+```
 
-  #### 2. Run the Wizard with the Auth Token
+the result is
+<a href='./figs/run-wizrad-with-token-output.txt'>here</a>
 
-  ```bash
-  pnpm dlx @sentry/wizard@latest -i nextjs --auth-token YOUR_TOKEN_HERE
-  ```
-
-  the result is
-  <a href='./figs/run-wizrad-with-token-output.txt'>here</a>
-
-
-  ### Files Created After Successful Installation
+### Files Created After Successful Installation
 
     The Sentry wizard creates these files in your project:
 
@@ -124,79 +116,92 @@
 
     **Note:** In this project, files #1 and #4 are in `src/`, while files #2, #3, #5, and #6 are in the project root.
 
-  ### How to Test Installation
+### How to Test Installation
 
-  After installation, verify that Sentry is working correctly by testing both client-side and server-side error capture.
+After installation, verify that Sentry is working correctly by testing both client-side and server-side error capture.
 
-  #### Step 1: Start the Development Server
+#### Step 1: Start the Development Server
 
-  ```bash
-  pnpm dev
-  ```
+```bash
+pnpm dev
+```
 
-  #### Step 2: Visit the Sentry Test Page
+#### Step 2: Visit the Sentry Test Page
 
-  Navigate to the built-in test page:
-  ```
-  http://localhost:3000/sentry-example-page
-  ```
+Navigate to the built-in test page:
 
-  #### Step 3: Trigger Test Errors
+```
+http://localhost:3000/sentry-example-page
+```
 
-  Click the **"Throw Sample Error"** button. This will:
-  - Trigger a **server-side error** via API call to `/api/sentry-example-api`
-  - Trigger a **client-side error** in the browser
-  - Send both errors to Sentry
+#### Step 3: Trigger Test Errors
 
-  #### Step 4: Verify in Sentry Dashboard
+Click the **"Throw Sample Error"** button. This will:
 
-  Visit your Sentry Issues page:
-  ```
-  https://nathan-krasney.sentry.io/issues/?project=4510673955258448
-  ```
+- Trigger a **server-side error** via API call to `/api/sentry-example-api`
+- Trigger a **client-side error** in the browser
+- Send both errors to Sentry
 
-  You should see 2 new error events:
-  - **`SentryExampleAPIError`** - Backend error (captured by `sentry.server.config.ts`)
-  - **`SentryExampleFrontendError`** - Frontend error (captured by `src/instrumentation-client.ts`)
+#### Step 4: Verify in Sentry Dashboard
 
-  #### What to Look For
+Visit your Sentry Issues page:
 
-  ✅ **Errors appear in Sentry dashboard**
-  ✅ **Stack traces show exact file and line numbers**
-  ✅ **Session Replay available** (client-side errors include user session recording)
-  ✅ **Performance traces captured** (tracesSampleRate: 1 in config)
+```
+https://nathan-krasney.sentry.io/issues/?project=4510673955258448
+```
 
-  If errors appear in Sentry, your installation is complete and working correctly!
+You should see 2 new error events:
+
+- **`SentryExampleAPIError`** - Backend error (captured by `sentry.server.config.ts`)
+- **`SentryExampleFrontendError`** - Frontend error (captured by `src/instrumentation-client.ts`)
+
+#### step 5: Check Your Inbox
+
+Verify that Sentry's Alert Engine triggered a notification.
+
+- Check the email associated with your Sentry account.
+- You should receive an email with the subject: "Regression: SentryExampleFrontendError" (or similar).
+
+#### What to Look For
+
+- ✅ **Errors appear in Sentry dashboard**
+- ✅ **Email alert received in your Inbox**
+- ✅ **Stack traces show exact file and line numbers**
+- ✅ **Session Replay available** (client-side errors include user session recording)
+- ✅ **Performance traces captured** (tracesSampleRate: 1 in config)
+
+
+If errors appear in Sentry and your Inbox, your installation is complete and working correctly!
 
   <h2>Usage</h2>
 
-  ### Run the Demo
+### Run the Demo
 
-  **Development mode:**
+**Development mode:**
 
 ```bash
   pnpm dev
 ```
 
+Click the 'Throw Sample Error' or 'Send Explicit Error' buttons and you'll receive an email alert from Sentry.
 
-  Click the 'Throw Sample Error' or 'Send Explicit Error' buttons and you'll receive an email alert from Sentry.
+**Note:** The 'Send Explicit Error' button is a custom addition to this demo project to demonstrate explicit error capture with `Sentry.captureException()`. It is not part of the standard Sentry installation.
 
-  ### Production-Only Configuration (Recommended for Real Apps) 
+### Production-Only Configuration (Recommended for Real Apps)
 
-  By default, Sentry runs in both development and production, wasting your 5K events/month quota during local testing.
+By default, Sentry runs in both development and production, wasting your 5K events/month quota during local testing.
 
-  To preserve free tier events, configure Sentry to run only in production:
+To preserve free tier events, configure Sentry to run only in production:
 
-  Wrap Sentry.init() in instrumentation-client.ts, sentry.server.config.ts, and sentry.edge.config.ts:
-  
+Wrap Sentry.init() in instrumentation-client.ts, sentry.server.config.ts, and sentry.edge.config.ts:
+
 ```typescript
-  if (process.env.NODE_ENV === 'production') {
-    Sentry.init({
-      // ... your config
-    });
-  }
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    // ... your config
+  });
+}
 ```
-
 
 **To run in production mode:**
 
@@ -205,64 +210,59 @@
   pnpm start
 ```
 
-
-
-
   <h2>Technologies Used</h2>
 
-  - next.js
-  - digital ocean droplet
-  - ubuntu
-  - micro saas
-  - winston
-  - pm2 
-  - nginx
-  - UptimeRobot
+- next.js
+- digital ocean droplet
+- ubuntu
+- micro saas
+- winston
+- pm2
+- nginx
+- UptimeRobot
 
+## Monitoring Design
 
-  ## Monitoring Design
+### Constraints
 
-  ### Constraints
-  - Micro-SaaS scale (<100 DAU)
-  - Tool must be free
-  - Must fit existing tech stack (Next.js, DigitalOcean, Ubuntu)
-  - Most business logic runs on the server
+- Micro-SaaS scale (<100 DAU)
+- Tool must be free
+- Must fit existing tech stack (Next.js, DigitalOcean, Ubuntu)
+- Most business logic runs on the server
 
-  ### Evaluated Alerting Options
-  | Option | Type | Pros | Cons | Decision |
-  |--------|------|------|------|----------|
-  | Custom Alerts (Winston + Webhooks) | Self-built | Full control, no vendor lock-in | High maintenance, no error grouping, alert noise | Rejected |
-  | Self-hosted Error Tracker (GlitchTip) | Open-source | Full data ownership, Sentry-compatible | Requires hosting, scaling, backups | Rejected |
-  | Paid APM Tools (Datadog, New Relic) | SaaS | Powerful observability | Paid, overkill for micro-SaaS | Rejected |
-  | **Sentry** | SaaS | Free tier alerts, Next.js support, automatic grouping | Free tier: 5K events/month | **Chosen** |
+### Evaluated Alerting Options
 
-  **Why Sentry?** While the free tier has a 5K events/month limit, the tradeoff favors Sentry at micro-SaaS scale. Expected error volume for <100 DAU with ~1% error rate is 600-1.2K events/month (well within limits). The automatic error grouping and Next.js integration eliminate the maintenance burden of custom solutions, and no infrastructure management beats self-hosted options for a solo developer.
+| Option                                | Type        | Pros                                                  | Cons                                             | Decision   |
+| ------------------------------------- | ----------- | ----------------------------------------------------- | ------------------------------------------------ | ---------- |
+| Custom Alerts (Winston + Webhooks)    | Self-built  | Full control, no vendor lock-in                       | High maintenance, no error grouping, alert noise | Rejected   |
+| Self-hosted Error Tracker (GlitchTip) | Open-source | Full data ownership, Sentry-compatible                | Requires hosting, scaling, backups               | Rejected   |
+| Paid APM Tools (Datadog, New Relic)   | SaaS        | Powerful observability                                | Paid, overkill for micro-SaaS                    | Rejected   |
+| **Sentry**                            | SaaS        | Free tier alerts, Next.js support, automatic grouping | Free tier: 5K events/month                       | **Chosen** |
 
+**Why Sentry?** While the free tier has a 5K events/month limit, the tradeoff favors Sentry at micro-SaaS scale. Expected error volume for <100 DAU with ~1% error rate is 600-1.2K events/month (well within limits). The automatic error grouping and Next.js integration eliminate the maintenance burden of custom solutions, and no infrastructure management beats self-hosted options for a solo developer.
 
-  ### How Sentry Works
+### How Sentry Works
 
-  When an error occurs, the Sentry SDK hooks into the runtime to automatically capture the exception and its context (like stack traces and breadcrumbs), then transmits it asynchronously as a JSON payload to Sentry’s servers via a non-blocking HTTP POST request.
-  
-  **Propagation Breakdown**
+When an error occurs, the Sentry SDK hooks into the runtime to automatically capture the exception and its context (like stack traces and breadcrumbs), then transmits it asynchronously as a JSON payload to Sentry’s servers via a non-blocking HTTP POST request.
 
-  - **Capture**: The SDK listens for global events like window.onerror (browser) or uncaughtException (server).
-  - **Enrichment**: It attaches metadata such as the user's OS, browser, and the sequence of actions leading to the crash (Breadcrumbs).
-  - **Transport**: The data is bundled into an "Envelope" and sent to your unique DSN endpoint without slowing down your application's performance.
-  - **Processing**: Sentry’s cloud receives the data, applies Source Maps to make the code readable, and checks your Alert Rules to send you an email immediately.
+**Propagation Breakdown**
 
+- **Capture**: The SDK listens for global events like window.onerror (browser) or uncaughtException (server).
+- **Enrichment**: It attaches metadata such as the user's OS, browser, and the sequence of actions leading to the crash (Breadcrumbs).
+- **Transport**: The data is bundled into an "Envelope" and sent to your unique DSN endpoint without slowing down your application's performance.
+- **Processing**: Sentry’s cloud receives the data, applies Source Maps to make the code readable, and checks your Alert Rules to send you an email immediately.
 
-  ### Error Monitoring Strategy
+### Error Monitoring Strategy
 
-  **Approach:** Layered error detection – complementary defenses
+**Approach:** Layered error detection – complementary defenses
 
-  | Layer | Tool | Role (Real) | Can Alert on Error? |
-  |-------|------|-------------|---------------------|
-  | **Application** | **Sentry SDK** | Alerts on: (1) thrown exceptions, (2) errors explicitly sent via SDK | **Yes – via Sentry alert rules** |
-  | **Application (handled)** | Your code + Winston | Logs all errors, but requires webhook for alerts | No, unless **you build webhook** |      
-  | **Process** | **PM2** | Detect crash/OOM | Limited / usually custom script |
+| Layer                     | Tool                | Role (Real)                                                          | Can Alert on Error?              |
+| ------------------------- | ------------------- | -------------------------------------------------------------------- | -------------------------------- |
+| **Application**           | **Sentry SDK**      | Alerts on: (1) thrown exceptions, (2) errors explicitly sent via SDK | **Yes – via Sentry alert rules** |
+| **Application (handled)** | Your code + Winston | Logs all errors, but requires webhook for alerts                     | No, unless **you build webhook** |
+| **Process**               | **PM2**             | Detect crash/OOM                                                     | Limited / usually custom script  |
 
-  **Note:** Server availability monitored separately via Uptime Robot.
-
+**Note:** Server availability monitored separately via Uptime Robot.
 
   <h2>Code Structure</h2>
   ....
@@ -270,22 +270,20 @@
   <h2>Demo</h2>
   home page
   <img src='./figs/main-page.png'/>
-  
-
-  sentry page after click button "Throw Sample Error"
-  <img src='./figs/example-page-after-click-throw.png'/>
 
 
-  alert email from sentry following button click
-  <img src='./figs/sentry-alert.png'>
+sentry page after click button "Throw Sample Error"
+<img src='./figs/example-page-after-click-throw.png'/>
 
-  sentry alerts as result of un handled exception
+alert email from sentry following button click
+<img src='./figs/sentry-alert.png'>
 
-  - red : sentry api error
-  - orange : sentry front end error
-  - blue : link not defined error
-  - purple : style not defined error
+sentry alerts as result of un handled exception
 
+- red : sentry api error
+- orange : sentry front end error
+- blue : link not defined error
+- purple : style not defined error
 
   <img src='./figs/sentry-alerts.png'/>
 
@@ -297,9 +295,7 @@
 
   <h2>open issue</h2>
   <ul>
-    <li>do i get the emails even without button click - yes in case you have an exception</li>
-    <li>do i get the two emails because it is debug version </li>
-    <li>in general i want to see sentry only in production otherwise its waist of free tier</li>
+    <li>why i get in email only front end</li>
   </ul>
 
   <h2>References</h2>
@@ -307,4 +303,3 @@
       <li><a href='https://docs.sentry.io/platforms/javascript/guides/nextjs/'>Sentry for Next.js SDK Docs</a></li>
     
   </ul>
-
