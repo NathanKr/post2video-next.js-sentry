@@ -132,6 +132,17 @@ the result is
 
     **Note:** In this project, files #1 and #4 are in `src/`, while files #2, #3, #5, and #6 are in the project root.
 
+### Step 3: Configure CI/CD Secrets (Production)
+If you are deploying via a CI/CD pipeline (like GitHub Actions) or a remote server, you must provide the Sentry Auth Token as an environment variable. This allows the build process to upload source maps so you can see unminified code in your stack traces.
+
+Add the following secret to your CI provider or your production `.env` file:
+
+* **`SENTRY_AUTH_TOKEN`**: The token you generated in the "Manual CLI Initialization" step.
+* **`SENTRY_ORG`**: Your Sentry organization slug.
+* **`SENTRY_PROJECT`**: Your Sentry project slug.
+
+
+
 ### How to Test Installation
 
 After installation, verify that Sentry is working correctly by testing both client-side and server-side error capture.
