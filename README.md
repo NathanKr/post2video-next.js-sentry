@@ -175,6 +175,7 @@ Verify that Sentry's Alert Engine triggered a notification.
 
 If errors appear in Sentry and your Inbox, your installation is complete and working correctly!
 
+  
   <h2>Usage</h2>
 
 ### Run the Demo
@@ -229,6 +230,8 @@ if (process.env.NODE_ENV === "production") {
   - **UptimeRobot** (External Downtime Monitoring)
 
 
+
+
 ## Monitoring Design
 
 ### Constraints
@@ -273,6 +276,14 @@ When an error occurs, the Sentry SDK hooks into the runtime to automatically cap
 **Note:** Server availability monitored separately via Uptime Robot.
 
   <h2>Code Structure</h2>
+
+  ### Sentry API Usage Explained
+
+To provide deeper observability beyond just "catching crashes," the following Sentry APIs are utilized in this implementation:
+
+- **`Sentry.logger`**: Used for internal SDK debugging. It helps verify that Sentry is initializing and sending events correctly without cluttering your standard application logs.
+- **`Sentry.startSpan`**: Used for **Performance Monitoring**. By wrapping the `fetch` call in a span, Sentry tracks the latency between the frontend click and the backend API response, creating a "trace" that connects both sides of the application.
+- **`Sentry.captureException`**: Used for **Explicit Error Tracking**. This is essential for reporting errors that occur inside `try/catch` blocks or business logic where the application doesn't necessarily "crash," but the error state still needs to be recorded.
   
  ### API Endpoint (Server-Side)
 Sentry automatically handles unhandled exceptions on the server side.
