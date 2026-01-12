@@ -142,6 +142,8 @@ Click the **"Throw Sample Error"** button. This will:
 - Trigger a **client-side error** in the browser
 - Send both errors to Sentry
 
+>💡 **Expectation Check:** While this triggers **two** separate errors, Sentry’s default alert rules often group simultaneous events from the same session to prevent alert fatigue. You will likely receive **only one email alert**, even though **both** errors will appear as distinct issues in your dashboard.
+
 #### Step 4: Verify in Sentry Dashboard
 
 Visit your Sentry Issues page:
