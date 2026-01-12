@@ -273,7 +273,75 @@ When an error occurs, the Sentry SDK hooks into the runtime to automatically cap
 **Note:** Server availability monitored separately via Uptime Robot.
 
   <h2>Code Structure</h2>
-  ....
+  
+ ### API Endpoint (Server-Side)
+Sentry automatically handles unhandled exceptions on the server side.
+
+  ```typescript
+import * as Sentry from "@sentry/nextjs";
+export const dynamic = "force-dynamic";
+
+class SentryExampleAPIError extends Error {
+  constructor(message: string | undefined) {
+    super(message);
+    this.name = "SentryExampleAPIError";
+  }
+}
+
+// A faulty API route to test Sentry's error monitoring
+export function GET() {
+  Sentry.logger.info("Sentry example API called");
+  throw new SentryExampleAPIError(
+    "This error is raised on the backend called by the example page.",
+  );
+}
+  ```
+
+  <h3>Throw Unhandled Exception Button (Client-Side)</h3>
+  Demonstrates Sentry catching unhandled exceptions in the browser.
+
+  ```typescript
+            <button
+              type="button"
+              onClick={async () => {
+                Sentry.logger.info("User clicked unhandled exception button");
+                await Sentry.startSpan(
+                  { name: "Example Frontend/Backend Span", op: "test" },
+                  async () => {
+                    const res = await fetch("/api/sentry-example-api");
+                    if (!res.ok) {
+                      setHasSentError(true);
+                    }
+                  }
+                );
+                throw new SentryExampleFrontendError(
+                  "Unhandled exception on frontend"
+                );
+              }}
+              disabled={!isConnected}
+            >
+              <span>Throw Unhandled Exception</span>
+            </button>
+  ```
+
+<h3>Send Explicit Error Button (Manual Capture)</h3>
+Demonstrates manual error reporting using Sentry.captureException.
+
+```typescript
+   <button
+              type="button"
+              onClick={async () => {
+                Sentry.logger.info("User clicked explicit error button");
+                Sentry.captureException(
+                  new Error("Explicit error captured via SDK")
+                );
+                setHasSentError(true);
+              }}
+              disabled={!isConnected}
+            >
+              <span>Send Explicit Error</span>
+            </button>
+```
 
   <h2>Demo</h2>
   home page
