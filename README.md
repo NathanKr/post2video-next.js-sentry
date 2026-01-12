@@ -43,27 +43,36 @@ pnpm dlx @sentry/wizard@latest -i nextjs
 
 You are prompted for questions :
 
-  <img src='./figs/prompt-after-step2-partA.png'/>
+  <img src="./figs/prompt-after-step2-partA.png"
+     alt="Sentry CLI wizard prompting for Next.js project setup options" />
+
 
 The browser in open so fill the info
 
-  <img src='./figs/prompt-after-step2-partB-filled.png'/>
+  <img src="./figs/prompt-after-step2-partB-filled.png"
+     alt="Sentry browser login form filled during CLI wizard authentication" />
+
 
 click the 'create your account' button and you are navigated to select your project
 
-  <img src='./figs/prompt-after-step2-partB-select-your-project.png'/>
+<img src="./figs/prompt-after-step2-partB-select-your-project.png"
+     alt="Sentry project selection screen shown during CLI wizard setup" />
 
 Click continue => i got 'waiting for wizard to connect'
 
-  <img src='./figs/waiting-to-connect.png'/>
+<img src="./figs/waiting-to-connect.png"
+     alt="Sentry CLI wizard stuck on 'waiting for wizard to connect' message after browser authentication" />
 
 i used email password so need to confirm email and got
 
-  <img src='./figs/emailed-confirmed.png'/>
+<img src="./figs/emailed-confirmed.png"
+     alt="Sentry email confirmation screen displayed after account verification" />
 
 Now in sentry i can see the project
 
-  <img src='./figs/projects.png'>
+  <img src="./figs/projects.png"
+     alt="Sentry dashboard showing newly created project after CLI wizard setup" />
+
 
 but no files created . Because i chose to log in with an email/password, you had the extra step of confirming your email. This sometimes causes the browser session to "lose track" of the original terminal request.
 
@@ -83,16 +92,23 @@ If the automated Sentry wizard hangs or fails to generate local files (for examp
 > **Note:** Sentry only shows the full token once for security. If you lose it, you will need to delete it and create a new one.
 
 step 1
-<img src='./figs/create-new-token.png'>
+<img src="./figs/create-new-token.png"
+     alt="Sentry dashboard settings page showing 'Create New Token' option" />
 
 step 2
-<img src='./figs/create-organization-token.png'/>
+<img src="./figs/create-organization-token.png"
+     alt="Sentry organization token creation form with required permissions" />
+
 
 step 3
-<img src='./figs/copy-token.png'/>
+<img src="./figs/copy-token.png"
+     alt="Generated Sentry organization token ready to be copied" />
+
 
 step 4
-<img src='./figs/token-created.png'/>
+<img src="./figs/token-created.png"
+     alt="Confirmation screen showing successfully created Sentry organization token" />
+
 
 #### 2. Run the Wizard with the Auth Token
 
@@ -351,14 +367,20 @@ Demonstrates manual error reporting using Sentry.captureException.
 
   <h2>Demo</h2>
   home page
-  <img src='./figs/main-page.png'/>
+  <img src="./figs/main-page.png"
+     alt="Post2Video demo homepage with Sentry test buttons visible" />
+
 
 
 sentry page after click button Throw Unhandled Exception
-<img src='./figs/example-page-after-click-throw.png'/>
+<img src="./figs/example-page-after-click-throw.png"
+     alt="Sentry example page after clicking 'Throw Unhandled Exception' button" />
+
 
 alert email from sentry following button click
-<img src='./figs/sentry-alert.png'>
+<img src="./figs/sentry-alert.png"
+     alt="Email alert from Sentry notifying about a frontend unhandled exception" />
+
 
 sentry alerts as result of un handled exception
 
@@ -367,7 +389,9 @@ sentry alerts as result of un handled exception
 - blue : link not defined error
 - purple : style not defined error
 
-  <img src='./figs/sentry-alerts.png'/>
+  <img src="./figs/sentry-alerts.png"
+     alt="Email alert from Sentry notifying about a frontend unhandled exception" />
+
 
 
   <h2>References</h2>
