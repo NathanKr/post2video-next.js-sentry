@@ -285,7 +285,7 @@ To provide deeper observability beyond just "catching crashes," the following Se
 - **`Sentry.captureException`**: Used for **Explicit Error Tracking**. This is essential for reporting errors that occur inside `try/catch` blocks or business logic where the application doesn't necessarily "crash," but the error state still needs to be recorded.
   
  ### API Endpoint (Server-Side)
-Sentry automatically handles unhandled exceptions on the server side.
+  Demonstrates Sentry **automatically reporting** a crash that occurs in the server.
 
   ```typescript
 import * as Sentry from "@sentry/nextjs";
@@ -308,30 +308,30 @@ export function GET() {
   ```
 
   <h3>Throw Unhandled Exception Button (Client-Side)</h3>
-  Demonstrates Sentry catching unhandled exceptions in the browser.
+  Demonstrates Sentry **automatically reporting** a crash that occurs in the browser.
 
   ```typescript
-            <button
-              type="button"
-              onClick={async () => {
-                // --- User clicked unhandled exception button
-                await Sentry.startSpan(
-                  { name: "Example Frontend/Backend Span", op: "test" },
-                  async () => {
-                    const res = await fetch("/api/sentry-example-api");
-                    if (!res.ok) {
-                      setHasSentError(true);
-                    }
-                  }
-                );
-                throw new SentryExampleFrontendError(
-                  "Unhandled exception on frontend"
-                );
-              }}
-              disabled={!isConnected}
-            >
-              <span>Throw Unhandled Exception</span>
-            </button>
+      <button
+        type="button"
+        onClick={async () => {
+          // --- User clicked unhandled exception button
+          await Sentry.startSpan(
+            { name: "Example Frontend/Backend Span", op: "test" },
+            async () => {
+              const res = await fetch("/api/sentry-example-api");
+              if (!res.ok) {
+                setHasSentError(true);
+              }
+            }
+          );
+          throw new SentryExampleFrontendError(
+            "Unhandled exception on frontend"
+          );
+        }}
+        disabled={!isConnected}
+      >
+        <span>Throw Unhandled Exception</span>
+      </button>
   ```
 
 <h3>Send Explicit Error Button (Manual Capture)</h3>
@@ -339,18 +339,18 @@ Demonstrates manual error reporting using Sentry.captureException.
 
 ```typescript
    <button
-              type="button"
-              onClick={async () => {
-                // --- User clicked explicit error button
-                Sentry.captureException(
-                  new Error("Explicit error captured via SDK")
-                );
-                setHasSentError(true);
-              }}
-              disabled={!isConnected}
-            >
-              <span>Send Explicit Error</span>
-            </button>
+    type="button"
+    onClick={async () => {
+      // --- User clicked explicit error button
+      Sentry.captureException(
+        new Error("Explicit error captured via SDK")
+      );
+      setHasSentError(true);
+    }}
+    disabled={!isConnected}
+  >
+    <span>Send Explicit Error</span>
+  </button>
 ```
 
   <h2>Demo</h2>
