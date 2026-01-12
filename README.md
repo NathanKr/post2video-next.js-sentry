@@ -212,14 +212,20 @@ if (process.env.NODE_ENV === "production") {
 
   <h2>Technologies Used</h2>
 
-- next.js
-- digital ocean droplet
-- ubuntu
-- micro saas
-- winston
-- pm2
-- nginx
-- UptimeRobot
+  ### Core Stack
+  - **Next.js** (App Router)
+  - **Micro-SaaS** (Post2Video)
+
+  ### Infrastructure & Deployment
+  - **DigitalOcean** (Ubuntu Droplet)
+  - **Nginx** (Reverse Proxy)
+  - **PM2** (Process Management)
+
+  ### Monitoring & Observability
+  - **Sentry** (Real-time Error Tracking & Alerting) — **[NEW]**
+  - **Winston** (Structured Application Logging)
+  - **UptimeRobot** (External Downtime Monitoring)
+
 
 ## Monitoring Design
 
