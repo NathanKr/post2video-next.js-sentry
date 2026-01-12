@@ -136,7 +136,7 @@ http://localhost:3000/sentry-example-page
 
 #### Step 3: Trigger Test Errors
 
-Click the **"Throw Sample Error"** button. This will:
+Click the **Throw Unhandled Exception** button. This will:
 
 - Trigger a **server-side error** via API call to `/api/sentry-example-api`
 - Trigger a **client-side error** in the browser
@@ -186,7 +186,7 @@ If errors appear in Sentry and your Inbox, your installation is complete and wor
   pnpm dev
 ```
 
-Click the 'Throw Sample Error' or 'Send Explicit Error' buttons and you'll receive an email alert from Sentry.
+Click the 'Throw Unhandled Exception' or 'Send Explicit Error' buttons and you'll receive an email alert from Sentry.
 
 **Note:** The 'Send Explicit Error' button is a custom addition to this demo project to demonstrate explicit error capture with `Sentry.captureException()`. It is not part of the standard Sentry installation.
 
@@ -281,7 +281,6 @@ When an error occurs, the Sentry SDK hooks into the runtime to automatically cap
 
 To provide deeper observability beyond just "catching crashes," the following Sentry APIs are utilized in this implementation:
 
-- **`Sentry.logger`**: Used for internal SDK debugging. It helps verify that Sentry is initializing and sending events correctly without cluttering your standard application logs.
 - **`Sentry.startSpan`**: Used for **Performance Monitoring**. By wrapping the `fetch` call in a span, Sentry tracks the latency between the frontend click and the backend API response, creating a "trace" that connects both sides of the application.
 - **`Sentry.captureException`**: Used for **Explicit Error Tracking**. This is essential for reporting errors that occur inside `try/catch` blocks or business logic where the application doesn't necessarily "crash," but the error state still needs to be recorded.
   
@@ -301,7 +300,7 @@ class SentryExampleAPIError extends Error {
 
 // A faulty API route to test Sentry's error monitoring
 export function GET() {
-  Sentry.logger.info("Sentry example API called");
+  // --- Sentry example API called
   throw new SentryExampleAPIError(
     "This error is raised on the backend called by the example page.",
   );
@@ -315,7 +314,7 @@ export function GET() {
             <button
               type="button"
               onClick={async () => {
-                Sentry.logger.info("User clicked unhandled exception button");
+                // --- User clicked unhandled exception button
                 await Sentry.startSpan(
                   { name: "Example Frontend/Backend Span", op: "test" },
                   async () => {
@@ -342,7 +341,7 @@ Demonstrates manual error reporting using Sentry.captureException.
    <button
               type="button"
               onClick={async () => {
-                Sentry.logger.info("User clicked explicit error button");
+                // --- User clicked explicit error button
                 Sentry.captureException(
                   new Error("Explicit error captured via SDK")
                 );
@@ -359,7 +358,7 @@ Demonstrates manual error reporting using Sentry.captureException.
   <img src='./figs/main-page.png'/>
 
 
-sentry page after click button "Throw Sample Error"
+sentry page after click button Throw Unhandled Exception
 <img src='./figs/example-page-after-click-throw.png'/>
 
 alert email from sentry following button click

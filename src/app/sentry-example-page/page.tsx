@@ -17,7 +17,7 @@
     const [isConnected, setIsConnected] = useState(true);
 
     useEffect(() => {
-      Sentry.logger.info("Sentry example page loaded");
+      // --- Sentry example page loaded
       async function checkConnectivity() {
         const result = await Sentry.diagnoseSdkConnectivity();
         setIsConnected(result !== "sentry-unreachable");
@@ -65,7 +65,7 @@
             <button
               type="button"
               onClick={async () => {
-                Sentry.logger.info("User clicked unhandled exception button");
+                // --- User clicked unhandled exception button
                 await Sentry.startSpan(
                   { name: "Example Frontend/Backend Span", op: "test" },
                   async () => {
@@ -87,7 +87,7 @@
             <button
               type="button"
               onClick={async () => {
-                Sentry.logger.info("User clicked explicit error button");
+                // --- User clicked explicit error button
                 Sentry.captureException(
                   new Error("Explicit error captured via SDK")
                 );
