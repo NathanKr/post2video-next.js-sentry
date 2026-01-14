@@ -1,33 +1,26 @@
-  <h1>Project Name</h1>
+  # Project Name
     Next.js + Sentry: Production Error Monitoring for Post2Video
 
-  <h2>Project Description</h2>
+  ## Project Description
   Building production error alerts for a Next.js micro-SaaS: how I evaluated and integrated Sentry for real-time error awareness. Includes the working demo I used to test the integration before deploying it to Post2Video.
 
-  <h2>Motivation</h2>
+  ## Motivation
 
-  <p>
   A user successfully signed up on post2video.com but failed onboarding due to a production error.
   The error was logged, but no alert was triggered — so I didn’t know about it.
-  </p>
 
-  <p>
   This highlighted a gap in my production setup:
   logs existed, but there was no real-time error awareness.
-  </p>
 
-  <p>
   The goal was to design a simple, free, and reliable alerting system for a Next.js micro-SaaS.
-  </p>
 
-  <h2>Key Takeaways</h2>
-  <ul>
-    <li>Sentry captures errors implicitly on client / server (unhandled exceptions) and explicitly (handled errors via SDK calls like Sentry.captureException())</li>
-    <li>Real-time email alerts ensure you know about production errors immediately</li>
-    <li>Free tier (5K events/month) is in general sufficient for micro-SaaS </li>
-  </ul>
+  ## Key Takeaways
 
-  <h2>Installation</h2>
+  - Sentry captures errors implicitly on client / server (unhandled exceptions) and explicitly (handled errors via SDK calls like Sentry.captureException())
+  - Real-time email alerts ensure you know about production errors immediately
+  - Free tier (5K events/month) is in general sufficient for micro-SaaS
+
+  ## Installation
 
 Step 1: Install the Dependency
 
@@ -43,35 +36,24 @@ pnpm dlx @sentry/wizard@latest -i nextjs
 
 You are prompted for questions :
 
-  <img src="./figs/prompt-after-step2-partA.png"
-     alt="Sentry CLI wizard prompting for Next.js project setup options" />
+![Sentry CLI wizard prompting for Next.js project setup options](./figs/prompt-after-step2-partA.png)
 
 
 The browser in open so fill the info
-
-  <img src="./figs/prompt-after-step2-partB-filled.png"
-     alt="Sentry browser login form filled during CLI wizard authentication" />
+![Sentry browser login form filled during CLI wizard authentication](./figs/prompt-after-step2-partB-filled.png)
 
 
 click the 'create your account' button and you are navigated to select your project
-
-<img src="./figs/prompt-after-step2-partB-select-your-project.png"
-     alt="Sentry project selection screen shown during CLI wizard setup" />
+![Sentry project selection screen shown during CLI wizard setup](./figs/prompt-after-step2-partB-select-your-project.png)
 
 Click continue => i got 'waiting for wizard to connect'
-
-<img src="./figs/waiting-to-connect.png"
-     alt="Sentry CLI wizard stuck on 'waiting for wizard to connect' message after browser authentication" />
+![Sentry CLI wizard stuck on 'waiting for wizard to connect' message after browser authentication](./figs/waiting-to-connect.png)
 
 i used email password so need to confirm email and got
-
-<img src="./figs/emailed-confirmed.png"
-     alt="Sentry email confirmation screen displayed after account verification" />
+![Sentry email confirmation screen displayed after account verification](./figs/emailed-confirmed.png)
 
 Now in sentry i can see the project
-
-  <img src="./figs/projects.png"
-     alt="Sentry dashboard showing newly created project after CLI wizard setup" />
+![Sentry dashboard showing newly created project after CLI wizard setup](./figs/projects.png)
 
 
 but no files created . Because i chose to log in with an email/password, you had the extra step of confirming your email. This sometimes causes the browser session to "lose track" of the original terminal request.
@@ -91,23 +73,19 @@ If the automated Sentry wizard hangs or fails to generate local files (for examp
 
 > **Note:** Sentry only shows the full token once for security. If you lose it, you will need to delete it and create a new one.
 
-step 1
-<img src="./figs/create-new-token.png"
-     alt="Sentry dashboard settings page showing 'Create New Token' option" />
+Step 1
+![Sentry dashboard settings page showing 'Create New Token' option](./figs/create-new-token.png)
 
-step 2
-<img src="./figs/create-organization-token.png"
-     alt="Sentry organization token creation form with required permissions" />
+Step 2
+![Sentry organization token creation form with required permissions](./figs/create-organization-token.png)
 
 
-step 3
-<img src="./figs/copy-token.png"
-     alt="Generated Sentry organization token ready to be copied" />
+Step 3
+![Generated Sentry organization token ready to be copied](./figs/copy-token.png)
 
 
-step 4
-<img src="./figs/token-created.png"
-     alt="Confirmation screen showing successfully created Sentry organization token" />
+Step 4
+![Confirmation screen showing successfully created Sentry organization token](./figs/token-created.png)
 
 
 #### 2. Run the Wizard with the Auth Token
@@ -117,7 +95,7 @@ pnpm dlx @sentry/wizard@latest -i nextjs --auth-token YOUR_TOKEN_HERE
 ```
 
 the result is
-<a href='./figs/run-wizrad-with-token-output.txt'>here</a>
+[here](./figs/run-wizrad-with-token-output.txt)
 
 ### Files Created After Successful Installation
 
@@ -204,7 +182,7 @@ Verify that Sentry's Alert Engine triggered a notification.
 If errors appear in Sentry and your Inbox, your installation is complete and working correctly!
 
   
-  <h2>Usage</h2>
+## Usage
   This section covers running the demo locally and configuring Sentry for production deployment.
 
 ### Run the Demo
@@ -236,7 +214,24 @@ if (process.env.NODE_ENV === "production") {
 ```
 This ensures Sentry only captures errors in your deployed production environment where NODE_ENV is set by your hosting provider.
 
-  <h2>Technologies Used</h2>
+## Troubleshooting & FAQ
+
+### 1. "Age" vs "Last Seen" Confusion
+**Issue:** I see an error with an Age of "2 days" but "Last Seen" is "2 minutes ago," yet I didn't get an email alert just now.
+
+**Explanation:** - **Age:** The first time this specific error fingerprint was ever recorded.
+- **Last Seen:** The most recent occurrence.
+- **Why no email?** By default, Sentry alerts on **New Issues** (Age = 0). Since this issue was already "born" 2 days ago, Sentry considers it an ongoing event and suppresses duplicate alerts to prevent inbox fatigue.
+
+**Solution:** If you want to be notified for every occurrence or a spike, you must configure **Alert Rules** in Sentry under `Settings > Alerts` and set a rule for "An issue is seen" rather than just "A new issue is created."
+
+### 2. Sentry is catching errors but not sending emails
+- Check your `Action Interval` in Alert Rules (default is often 30-60 minutes).
+- Ensure your `NODE_ENV` is actually set to `production` if you implemented the production-only wrapper.
+- Verify the `level` in `logger.ts` — if you log as `logger.warn()`, it won't be sent if your transport is set to `level: 'error'`.
+
+
+## Technologies Used
     Technologies organized by system layer:
 
   ### Core Stack
@@ -300,7 +295,7 @@ When an error occurs, the Sentry SDK hooks into the runtime to automatically cap
 
 **Note:** Server availability monitored separately via Uptime Robot.
 
-  <h2>Code Structure</h2>
+## Code Structure
 
 > 💡 **Note:** The standard Sentry installation includes `Sentry.logger` and `Sentry.startSpan` in the example code. This demo has removed them to focus exclusively on error capture and alerting.
 
@@ -333,7 +328,7 @@ export function GET() {
 }
   ```
 
-  <h3>Throw Unhandled Exception Button (Client-Side)</h3>
+  ### Throw Unhandled Exception Button (Client-Side)
   Demonstrates Sentry **automatically reporting** a crash that occurs in the browser.
 
   ```typescript
@@ -355,7 +350,7 @@ export function GET() {
       </button>
   ```
 
-<h3>Send Explicit Error Button (Manual Capture)</h3>
+### Send Explicit Error Button (Manual Capture)
 Demonstrates manual error reporting using Sentry.captureException.
 
 ```typescript
@@ -374,23 +369,20 @@ Demonstrates manual error reporting using Sentry.captureException.
   </button>
 ```
 
-  <h2>Demo</h2>
+## Demo
   Visual walkthrough from triggering test errors to receiving Sentry alerts.
 
   home page
-  <img src="./figs/main-page.png"
-     alt="Post2Video demo homepage with Sentry test buttons visible" />
+  ![Post2Video demo homepage with Sentry test buttons visible](./figs/main-page.png)
 
 
 
 sentry page after click button Throw Unhandled Exception
-<img src="./figs/example-page-after-click-throw.png"
-     alt="Sentry example page after clicking 'Throw Unhandled Exception' button" />
+![Sentry example page after clicking 'Throw Unhandled Exception' button](./figs/example-page-after-click-throw.png)
 
 
 alert email from sentry following button click
-<img src="./figs/sentry-alert.png"
-     alt="Email alert from Sentry notifying about a frontend unhandled exception" />
+![Email alert from Sentry notifying about a frontend unhandled exception](./figs/sentry-alert.png)
 
 
 sentry alerts as result of un handled exception
@@ -400,13 +392,12 @@ sentry alerts as result of un handled exception
 - blue : link not defined error
 - purple : style not defined error
 
-  <img src="./figs/sentry-alerts.png"
-     alt="Email alert from Sentry notifying about a frontend unhandled exception" />
+![Email alert from Sentry notifying about a frontend unhandled exception](./figs/sentry-alerts.png)
 
 
+age vs last seen 
+![Sentry dashboard showing an issue first seen 2 days ago but occurring 2 minutes ago without triggering a new alert](./figs/same-error-no-email.png)
 
-  <h2>References</h2>
-  <ul>
-      <li><a href='https://docs.sentry.io/platforms/javascript/guides/nextjs/'>Sentry for Next.js SDK Docs</a></li>
-    
-  </ul>
+## References
+
+- [Sentry for Next.js SDK Docs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
