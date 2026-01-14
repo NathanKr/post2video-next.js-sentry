@@ -175,9 +175,10 @@ Click the **Throw Unhandled Exception** button. This will:
 
 Visit your Sentry Issues page:
 
-```
-https://nathan-krasney.sentry.io/issues/?project=4510673955258448
-```
+https://[your-org-name].sentry.io/issues/?project=[your-project-id]
+
+e.g. https://nathan-krasney.sentry.io/issues/?project=4510673955258448
+
 
 You should see 2 new error events:
 
@@ -233,13 +234,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 ```
-
-**To run in production mode:**
-
-```bash
-  pnpm build
-  pnpm start
-```
+This ensures Sentry only captures errors in your deployed production environment where NODE_ENV is set by your hosting provider.
 
   <h2>Technologies Used</h2>
     Technologies organized by system layer:
