@@ -58,7 +58,7 @@ Now in sentry i can see the project
 
 but no files created . Because i chose to log in with an email/password, you had the extra step of confirming your email. This sometimes causes the browser session to "lose track" of the original terminal request.
 
-### 🛠️ Installation Troubleshooting: Manual CLI Initialization
+### Installation Troubleshooting: Manual CLI Initialization
 
 If the automated Sentry wizard hangs or fails to generate local files (for example, after logging in via email/password), you can bypass the browser step using an **Auth Token**.
 
@@ -101,12 +101,12 @@ the result is
 
     The Sentry wizard creates these files in your project:
 
-    1. **`src/instrumentation-client.ts`** - Browser-side Sentry initialization
-    2. **`sentry.server.config.ts`** - Server-side Sentry initialization
-    3. **`sentry.edge.config.ts`** - Edge runtime error handling
-    4. **`src/instrumentation.ts`** - Registers Sentry before Next.js starts (critical for server errors)
-    5. **`next.config.ts`** - Modified with `withSentryConfig()` wrapper
-    6. **`.env.sentry-build-plugin`** - Auth token (auto-added to `.gitignore`)
+    1. **src/instrumentation-client.ts** - Browser-side Sentry initialization
+    2. **sentry.server.config.ts** - Server-side Sentry initialization
+    3. **sentry.edge.config.ts** - Edge runtime error handling
+    4. **src/instrumentation.ts** - Registers Sentry before Next.js starts (critical for server errors)
+    5. **next.config.ts** - Modified with `withSentryConfig()` wrapper
+    6. **.env.sentry-build-plugin** - Auth token (auto-added to `.gitignore`)
 
     **Note:** In this project, files #1 and #4 are in `src/`, while files #2, #3, #5, and #6 are in the project root.
 
@@ -172,11 +172,11 @@ Verify that Sentry's Alert Engine triggered a notification.
 
 #### What to Look For
 
-- ✅ **Errors appear in Sentry dashboard**
-- ✅ **Email alert received in your Inbox**
-- ✅ **Stack traces show exact file and line numbers**
-- ✅ **Session Replay available** (client-side errors include user session recording)
-- ✅ **Performance traces captured** (tracesSampleRate: 1 in config)
+- **Errors appear in Sentry dashboard**
+- **Email alert received in your Inbox**
+- **Stack traces show exact file and line numbers**
+- **Session Replay available** (client-side errors include user session recording)
+- **Performance traces captured** (tracesSampleRate: 1 in config)
 
 
 If errors appear in Sentry and your Inbox, your installation is complete and working correctly!
