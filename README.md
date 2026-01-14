@@ -216,6 +216,8 @@ This ensures Sentry only captures errors in your deployed production environment
 
 ## Troubleshooting & FAQ
 
+This section covers common configuration questions and unexpected behaviors encountered when tracking errors across different environments.
+
 ### 1. "Age" vs "Last Seen" Confusion
 **Issue:** I see an error with an Age of "2 days" but "Last Seen" is "2 minutes ago," yet I didn't get an email alert just now.
 
@@ -370,22 +372,22 @@ Demonstrates manual error reporting using Sentry.captureException.
 ```
 
 ## Demo
-  Visual walkthrough from triggering test errors to receiving Sentry alerts.
+Visual walkthrough from triggering test errors to receiving Sentry alerts.
 
-  home page
-  ![Post2Video demo homepage with Sentry test buttons visible](./figs/main-page.png)
+**Home page**
+![Post2Video demo homepage with Sentry test buttons visible](./figs/main-page.png)
 
 
 
-sentry page after click button Throw Unhandled Exception
+**Sentry page after click button Throw Unhandled Exception**
 ![Sentry example page after clicking 'Throw Unhandled Exception' button](./figs/example-page-after-click-throw.png)
 
 
-alert email from sentry following button click
+**Alert email from sentry following button click**
 ![Email alert from Sentry notifying about a frontend unhandled exception](./figs/sentry-alert.png)
 
 
-sentry alerts as result of un handled exception
+**Sentry alerts as result of un handled exception**
 
 - red : sentry api error
 - orange : sentry front end error
@@ -395,7 +397,7 @@ sentry alerts as result of un handled exception
 ![Email alert from Sentry notifying about a frontend unhandled exception](./figs/sentry-alerts.png)
 
 
-age vs last seen 
+**Age vs last seen**
 ![Sentry dashboard showing an issue first seen 2 days ago but occurring 2 minutes ago without triggering a new alert](./figs/same-error-no-email.png)
 
 ## References
